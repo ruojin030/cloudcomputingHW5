@@ -8,7 +8,6 @@ var upload = multer({ dest: 'uploads/' })
 var app = express()
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'hw5' });
 
-///deposit { filename: (type=text), contents: (type=file) }
 app.post('/deposit',upload.single('contents'),function(req,res){
     console.log(req.file.buffer)
     var filename = req.body.filename
