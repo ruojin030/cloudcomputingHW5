@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 
 var app = express()
 var jsonParser = bodyParser.json()
-const client = new cassandra.Client({ contactPoints: ['130.245.171.151'], localDataCenter: 'datacenter1', keyspace: 'hw5' });
+const client = new cassandra.Client({ contactPoints: ['localhost'],  keyspace: 'hw5' });
 client.connect(function (err) {
     if(err){
         console.log(err)
