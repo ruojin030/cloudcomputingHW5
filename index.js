@@ -14,7 +14,7 @@ app.post('/deposit',upload.single('contents'),function(req,res){
     console.log(req.file)
     var filename = req.body.filename
     var contents = req.file
-    //console.log(contents instanceof Blob)
+    console.log(typeof contents)
     const query = "INSERT INTO imgs(filename,contents) VALUES(?, ?)"
     var params = [filename,contents];
     client.execute(query, params, { prepare: true });
@@ -25,14 +25,15 @@ app.get('/retrieve',function(req,res){
     const query = "SELECT contents FROM imgs WHERE filename = ?"
     client.execute(query,filename, function (err, result) {
         if(err) return res.send("err")
-        var contents = result.first();
+        var contents = result[0];
+        delete contents
         //The row is an Object with column names as property keys. 
         res.writeHead(200, {'Content-Type': 'image/...' })
       });
 })
 
 
-const port = 80
+const port = 3000
 
 
 
