@@ -8,16 +8,15 @@ var upload = multer({ dest: 'uploads/' })
 var app = express()
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'hw5' });
 
-app.use(express.urlencoded())
 ///deposit { filename: (type=text), contents: (type=file) }
 app.post('/deposit',upload.single('contents'),function(req,res){
-    console.log(req.file)
+    console.log(req.file.buffer)
     var filename = req.body.filename
     var contents = req.file
     console.log(typeof contents)
     const query = "INSERT INTO imgs(filename,contents) VALUES(?, ?)"
-    var params = [filename,contents];
-    client.execute(query, params, { prepare: true });
+    var params = [req.body.filename,req.file];
+    client.execute(query, params);
     res.send("OK");
 })
 app.get('/retrieve',function(req,res){
