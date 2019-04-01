@@ -1,20 +1,22 @@
 var express = require('express')
 var cassandra = require('cassandra-driver');
 var bodyParser = require('body-parser');
+const multer = require("multer");
+var upload = multer({ dest: 'uploads/' })
 
 var app = express()
 var jsonParser = bodyParser.json()
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'hw5' });
 
-
+app.use(express.urlencoded())
 ///deposit { filename: (type=text), contents: (type=file) }
-app.post('/deposit', jsonParser,function(req,res){
+app.post('/deposit',upload.single('contents'),function(req,res){
+    console.log(req.file)
     var filename = req.body.filename
-    var contents = req.body.contents
-    console.log(req.body)
+    var contents = req.file
     const query = "INSERT INTO imgs(filename,contents) VALUES(?, ?)"
-    var params = [filename,contents];
-    client.execute(query, params, { prepare: true });
+    //var params = [filename,contents];
+    //client.execute(query, params, { prepare: true });
     res.send("OK");
 })
 app.get('/retrieve',jsonParser,function(req,res){
@@ -29,7 +31,7 @@ app.get('/retrieve',jsonParser,function(req,res){
 })
 
 
-const port = 80
+const port = 3000
 
 
 
