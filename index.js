@@ -1,6 +1,8 @@
 var express = require('express')
 var cassandra = require('cassandra-driver');
 const multer = require("multer");
+var Blob = require('blob');
+
 var upload = multer({ dest: 'uploads/' })
 
 var app = express()
@@ -12,7 +14,8 @@ app.post('/deposit',upload.single('contents'),function(req,res){
     console.log(req.file)
     var filename = req.body.filename
     var contents = req.file
-    const query = "INSERT INTO imgs(filename,contents) VALUES(?, ?)"
+    console.log(contents instanceof Blob)
+    //const query = "INSERT INTO imgs(filename,contents) VALUES(?, ?)"
     var params = [filename,contents];
     client.execute(query, params, { prepare: true });
     res.send("OK");
@@ -29,7 +32,7 @@ app.get('/retrieve',function(req,res){
 })
 
 
-const port = 80
+const port = 3000
 
 
 

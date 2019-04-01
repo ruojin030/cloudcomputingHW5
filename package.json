@@ -4,6 +4,7 @@
   "description": "cassandra",
   "main": "index.js",
   "dependencies": {
+    "blob": "0.0.5",
     "cassandra-driver": "^4.0.0",
     "express": "^4.16.4",
     "multer": "^1.4.1",
