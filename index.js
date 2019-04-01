@@ -11,6 +11,7 @@ const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCen
 app.post('/deposit', jsonParser,function(req,res){
     var filename = req.body.filename
     var contents = req.body.contents
+    console.log("recieve!")
     const query = "INSERT INTO imgs(filename,contents) VALUES(?, ?)"
     var params = [filename,contents];
     client.execute(query, params, { prepare: true });
@@ -28,7 +29,7 @@ app.get('/retrieve',jsonParser,function(req,res){
 })
 
 
-const port = 3000
+const port = 80
 
 
 
