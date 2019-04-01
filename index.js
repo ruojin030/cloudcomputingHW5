@@ -17,7 +17,7 @@ app.post('/deposit',upload.single('contents'),function(req,res){
     client.execute(query, params, { prepare: true });
     res.send("OK");
 })
-app.get('/retrieve',jsonParser,function(req,res){
+app.get('/retrieve',function(req,res){
     var filename = req.body.filename
     const query = "SELECT contents FROM imgs WHERE filename = ?"
     client.execute(query,filename, function (err, result) {
