@@ -21,7 +21,7 @@ app.post('/deposit',upload.single('contents'),function(req,res){
     //})
     
 })
-app.get('/retrieve',jsonParser,function(req,res){
+app.get('/retrieve',upload.none(),function(req,res){
     //var filename = req.body.filename
     console.log(req.body)
     //console.log(filename)
