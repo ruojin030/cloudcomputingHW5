@@ -29,8 +29,8 @@ app.get('/retrieve',jsonParser,function(req,res){
     client.execute(query,params,{prepare :true}, function (err, result) {
         if(err) return console.log(err);
         var contents = result.first();
-        var file = JSON.stringify(contents);
-        console.log(file)
+        
+        console.log(contents.getAsObject())
 
         //The row is an Object with column names as property keys. 
         res.writeHead(200, {'Content-Type': 'image/...' })
