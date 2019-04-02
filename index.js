@@ -29,7 +29,7 @@ app.get('/retrieve',jsonParser,function(req,res){
     client.execute(query,params,{prepare :true}, function (err, result) {
         if(err) return console.log(err);
         var contents = result[0];
-        var type = contents.mimetype;
+        console.log(contents)
 
         //The row is an Object with column names as property keys. 
         res.writeHead(200, {'Content-Type': 'image/...' })
