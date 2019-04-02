@@ -9,13 +9,14 @@ var app = express()
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'hw5' });
 
 app.post('/deposit',upload.single('contents'),function(req,res){
-    fs.readFile(req.file.buffer, function(err, buffer){
-        if(err){console.log(err)}
+    console.log(req.file.buffer)
+   // fs.readFile(req.file.buffer, function(err, buffer){
+        //if(err){console.log(err)}
         const query = "INSERT INTO imgs(filename,contents) VALUES(?, ?)"
         var params = [req.body.filename,buffer];
         client.execute(query, params, { prepare: true });
         res.send("OK");
-    })
+    //})
     
 })
 app.get('/retrieve',upload.none(),function(req,res){
