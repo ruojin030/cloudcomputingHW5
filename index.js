@@ -24,7 +24,7 @@ app.post('/deposit',upload.single('contents'),function(req,res){
 })
 app.get('/retrieve',up.none(),function(req,res){
     var filename = req.query.filename
-    console.log(req.query)
+    console.log(req.query.filename)
     const query = "SELECT contents FROM imgs WHERE filename = ?"
     var params = [filename]
     client.execute(query,params,{prepare :true}, function (err, result) {
