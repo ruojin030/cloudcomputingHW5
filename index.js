@@ -13,7 +13,7 @@ app.post('/deposit',upload.single('contents'),function(req,res){
    // fs.readFile(req.file.buffer, function(err, buffer){
         //if(err){console.log(err)}
         const query = "INSERT INTO imgs(filename,contents) VALUES(?, ?)"
-        var params = [req.body.filename,buffer];
+        var params = [req.body.filename,req.file.buffer];
         client.execute(query, params, { prepare: true });
         res.send("OK");
     //})
