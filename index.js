@@ -2,6 +2,8 @@ var express = require('express')
 var cassandra = require('cassandra-driver');
 const multer = require("multer");
 var fs = require('file-system');
+var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json()
 var storage = multer.memoryStorage()
 var upload = multer({ dest: 'uploads/',storage: storage})
 
@@ -19,7 +21,7 @@ app.post('/deposit',upload.single('contents'),function(req,res){
     //})
     
 })
-app.get('/retrieve',upload.none(),function(req,res){
+app.get('/retrieve',jsonParser,function(req,res){
     var filename = req.body.filename
     console.log(filename)
     const query = "SELECT contents FROM imgs WHERE filename = ?"
@@ -34,7 +36,7 @@ app.get('/retrieve',upload.none(),function(req,res){
 })
 
 
-const port = 80
+const port = 3000
 
 
 
