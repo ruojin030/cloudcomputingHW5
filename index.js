@@ -12,19 +12,21 @@ app.post('/deposit',upload.single('contents'),function(req,res){
     console.log(req.file.buffer)
     var filename = req.body.filename
     var contents = req.file
-    console.log(typeof contents)
+    var fileBuffer = Buffer.from(contents)
+    console.log(typeof fileBuffer)
     const query = "INSERT INTO imgs(filename,contents) VALUES(?, ?)"
-    var params = [req.body.filename,req.file];
+    var params = [req.body.filename,Buffer.from(req.file)];
     client.execute(query, params, { prepare: true });
     res.send("OK");
 })
-app.get('/retrieve',function(req,res){
+app.get('/retrieve',upload.none(),function(req,res){
     var filename = req.body.filename
     const query = "SELECT contents FROM imgs WHERE filename = ?"
     client.execute(query,filename, function (err, result) {
         if(err) return res.send("err")
         var contents = result[0];
-        delete contents
+        var type = contents.mimetype;
+
         //The row is an Object with column names as property keys. 
         res.writeHead(200, {'Content-Type': 'image/...' })
       });
