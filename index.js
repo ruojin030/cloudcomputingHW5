@@ -24,8 +24,8 @@ app.post('/deposit',upload.single('contents'),function(req,res){
 app.get('/retrieve',jsonParser,function(req,res){
     var filename = req.body.filename
     console.log(filename)
-    const query = "SELECT contents FROM imgs WHERE filename = ?"
-    client.execute(query,req.body.filename,{prepare:true}, function (err, result) {
+    const query = "SELECT contents FROM imgs WHERE filename = 'anti'"
+    client.execute(query,{prepare :true}, function (err, result) {
         if(err) return console.log(err);
         var contents = result[0];
         var type = contents.mimetype;
