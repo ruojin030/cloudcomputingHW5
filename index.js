@@ -28,7 +28,7 @@ app.get('/retrieve',jsonParser,function(req,res){
     var params = [filename]
     client.execute(query,params,{prepare :true}, function (err, result) {
         if(err) return console.log(err);
-        var contents = result[0];
+        var contents = result.first();
         console.log(contents)
 
         //The row is an Object with column names as property keys. 
