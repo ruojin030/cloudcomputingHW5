@@ -29,6 +29,7 @@ app.get('/retrieve',jsonParser,function(req,res){
     client.execute(query,params,{prepare :true}, function (err, result) {
         if(err) return console.log(err);
         var contents = result.first();
+        var data = contents.contents
         //data = fs.readFileSync(contents.contents);
         console.log(new Buffer(data.toString(), 'base64').toString('ascii') )
 
