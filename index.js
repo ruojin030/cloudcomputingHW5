@@ -30,11 +30,12 @@ app.get('/retrieve',jsonParser,function(req,res){
         if(err) return console.log(err);
         var contents = result.first();
         var data = contents.contents
-        data = fs.readFile(contents.contents);
-        console.log(data )
-
+        //data = fs.readFile(contents.contents);
+        var type = filename.split('.')[1]
+        var ct = 'image/'+type
         //The row is an Object with column names as property keys. 
-        res.writeHead(200, {'Content-Type': 'image/...' })
+        res.writeHead(200, {'Content-Type': ct})
+        res.send(data)
       });
 })
 
