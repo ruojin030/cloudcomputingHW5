@@ -3,7 +3,7 @@ var cassandra = require('cassandra-driver');
 const multer = require("multer");
 var fs = require('file-system');
 
-var upload = multer({ dest: 'uploads/',storage: storage})
+var upload = multer({ dest: 'uploads/',storage: 'imgs/'})
 
 var app = express()
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'hw5' });
