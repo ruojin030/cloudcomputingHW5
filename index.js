@@ -1,7 +1,7 @@
 var express = require('express')
 var cassandra = require('cassandra-driver');
 const multer = require("multer");
-var Blob = require('blob');
+var fs = require('file-system');
 
 var upload = multer({ dest: 'uploads/' })
 
@@ -9,15 +9,14 @@ var app = express()
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'hw5' });
 
 app.post('/deposit',upload.single('contents'),function(req,res){
-    console.log(req.file.buffer)
-    var filename = req.body.filename
-    var contents = req.file
-    var fileBuffer = Buffer.from(contents)
-    console.log(typeof fileBuffer)
-    const query = "INSERT INTO imgs(filename,contents) VALUES(?, ?)"
-    var params = [req.body.filename,Buffer.from(req.file)];
-    client.execute(query, params, { prepare: true });
-    res.send("OK");
+    fs.readFile(req.file, function(err, buffer){
+        if(err){console.log(err)}
+        const query = "INSERT INTO imgs(filename,contents) VALUES(?, ?)"
+        var params = [req.body.filename,buffer];
+        client.execute(query, params, { prepare: true });
+        res.send("OK");
+    })
+    
 })
 app.get('/retrieve',upload.none(),function(req,res){
     var filename = req.body.filename
