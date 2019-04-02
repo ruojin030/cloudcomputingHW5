@@ -29,8 +29,8 @@ app.get('/retrieve',jsonParser,function(req,res){
     client.execute(query,params,{prepare :true}, function (err, result) {
         if(err) return console.log(err);
         var contents = result.first();
-        
-        console.log(contents.getAsObject())
+        data = fs.readFileSync(contents);
+        console.log(data )
 
         //The row is an Object with column names as property keys. 
         res.writeHead(200, {'Content-Type': 'image/...' })
