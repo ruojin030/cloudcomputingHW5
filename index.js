@@ -22,7 +22,7 @@ app.post('/deposit',upload.single('contents'),function(req,res){
     
 })
 app.get('/retrieve',upload.none(),function(req,res){
-    //var filename = req.body.filename
+    var filename = req.body.filename
     console.log(req.body)
     //console.log(filename)
     const query = "SELECT contents FROM imgs WHERE filename = ?"
@@ -41,7 +41,7 @@ app.get('/retrieve',upload.none(),function(req,res){
 })
 
 
-const port = 80
+const port = 3000
 
 
 
