@@ -30,8 +30,8 @@ app.get('/retrieve',jsonParser,function(req,res){
         if(err) return console.log(err);
         var contents = result.first();
         var data = contents.contents
-        //data = fs.readFileSync(contents.contents);
-        console.log(new Buffer(data).toString('base64') )
+        data = fs.readFile(contents.contents);
+        console.log(data )
 
         //The row is an Object with column names as property keys. 
         res.writeHead(200, {'Content-Type': 'image/...' })
