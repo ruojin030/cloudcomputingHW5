@@ -23,7 +23,7 @@ app.get('/retrieve',upload.none(),function(req,res){
     var filename = req.body.filename
     const query = "SELECT contents FROM imgs WHERE filename = ?"
     client.execute(query,filename, function (err, result) {
-        if(err) return res.send("err")
+        if(err) return console.log(err);
         var contents = result[0];
         var type = contents.mimetype;
 
