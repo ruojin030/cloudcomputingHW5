@@ -24,7 +24,7 @@ app.post('/deposit',upload.single('contents'),function(req,res){
 })
 app.get('/retrieve',up.none(),function(req,res){
     var filename = req.query.filename
-    //console.log(filename)
+    console.log(filename)
     const query = "SELECT contents FROM imgs WHERE filename = ?"
     var params = [filename]
     client.execute(query,params,{prepare :true}, function (err, result) {
@@ -35,8 +35,8 @@ app.get('/retrieve',up.none(),function(req,res){
         var type = filename.split('.')[1]
         var ct = 'image/'+type
         //The row is an Object with column names as property keys. 
-        res.writeHead(200, {'Content-Type': ct})
-        res.send(data)
+        res.type(ct)
+        res.send(data);
       });
 })
 
