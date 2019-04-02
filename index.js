@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json()
 var storage = multer.memoryStorage()
 var upload = multer({ dest: 'uploads/',storage: storage})
+var up = multer()
 
 var app = express()
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'hw5' });
@@ -21,7 +22,7 @@ app.post('/deposit',upload.single('contents'),function(req,res){
     //})
     
 })
-app.get('/retrieve',upload.single('filename'),function(req,res){
+app.get('/retrieve',up.none(),function(req,res){
     console.log(req.body)
     var filename = req.body.filename
     //console.log(filename)
